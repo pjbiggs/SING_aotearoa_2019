@@ -38,17 +38,13 @@ We are planning on covering the following in our 90 minute session:
 A brief overview of the format can be found at [FASTQ_format](https://en.wikipedia.org/wiki/FASTQ_format). Please have a look at this file to familairse yourself with the fact that each sequence covers 4 lines of text, and has much more information in it than a standard fasta file:
 
 > read header (usually starts with '@')
->
 > sequence
->
 > extra line (now usually a "+") for space reasons
->
 > quality (encoded as a single character defined by an equation)
 
 This is in comparison to a much simpler fasta file:
 
 > read header (starts with '>')
->
 > sequence
 
 
