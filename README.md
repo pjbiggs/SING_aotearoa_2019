@@ -18,6 +18,7 @@ We are planning on covering the following in our 90 minute session:
     * Attempt with these reads (or a subset) – tbd 
     * What did we learn?
 
+---
 
 ## Mapping of reads to a reference genome
 
@@ -36,6 +37,7 @@ We are planning on covering the following in our 90 minute session:
 ### What did we learn?
 
 
+---
 
 ## Assembling a small genome 
 
