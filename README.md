@@ -32,7 +32,7 @@ We are going to use Apple iMacs and a set of data that we can download from a re
 
 Let's start off with RStudio.  Depending on the setup, you may either have an RStudio icon on your machine, or you will have to go start one.  
 
-<img src="icons.png"" alt="thing" width="200"/>
+<img src="icons.png" alt="thing" width="200"/>
 
 For us in this short practical, we have an icon on the application bar at the base of the screen.  It's the blue circle with "R" in white writing inside it.  On the icon, just double click on it.  If you want to start one another way, click on the search magnifier icon in the top right of the screen, and type "RStudio".  Either way, the result is a session of the program RStudio opening after a few seconds. RStudio is a nice glossy way to use a statistical language called R.  
 
@@ -45,7 +45,7 @@ For us in this short practical, we have an icon on the application bar at the ba
 
 On the desktop you will see a folder called "bioinformatics":
 
-<img src="bioinformaticsFolder.png"" alt="thing" width="100"/>
+<img src="bioinformaticsFolder.png" alt="thing" width="100"/>
 
 We will work with a couple of test folders from the "bioinformatics" folder.  You should see the "bioinformatics" folder on your desktop.  Double click on it and go to the "SING-Aotearoa2019" folder (there are lots of folders in there).  Click on the folder once and then, copy the folder to your Desktop before you do anything else.
 
@@ -55,7 +55,7 @@ XXXXXXXXXXX more needed here XXXXXXXXXXX
 
 So let's look at RStudio in a little more detail.  Again, this is a brief introduction to give you a flavour.  on opening RStudio, you should see four windows, of which we are mostly worried about the two on the left hand side.  
 
-<img src="Rstudio.png"" alt="thing" width="600"/>
+<img src="Rstudio.png" alt="thing" width="600"/>
 
 Think of the top window -- the source -- as where we ask the software to do stuff, and the bottom window -- the console -- as to where it happens.  For now, that is all you need to know.
 
