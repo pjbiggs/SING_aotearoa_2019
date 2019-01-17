@@ -2,7 +2,13 @@
 
 # Bioinformatics practical for 2019 SING-Aotearoa session
 
-This is taking place on Wednesday 23rd January 2019 in C5-10, Science Tower C, Massey University, Palmerston North.
+This is taking place on Wednesday 23rd January 2019 at 1330 -- 1500 in C5-10, Science Tower C, Massey University, Palmerston North.
+
+
+## Some background on next generating sequnecing
+
+
+
 
 ## What are we going to do?
 
@@ -10,11 +16,53 @@ Following on from this morning's work, we are going to look at how short sequenc
 
 We will go into this into certain aspects of this in a little more detail later, but the chloroplast we are looking at is ~160kb in length, and a genomic map of this chloroplast is shown below.
 
-![Fig. 1: The chloroplast of *Eucalyptus grandis*](chloroplast.png)
+![The chloroplast of *Eucalyptus grandis*](chloroplast.png)
 
 Clicking on the link [NC_014570](https://www.ncbi.nlm.nih.gov/nuccore/NC_014570) will take you to the entry at NCBI which you can have a look at. 
 
 We have our reference genome, and also our short reads that we are going to do two things with: map these to the reference and assemble the short reads into longer sequence contigs.
+
+---
+
+## How are going to do it?
+
+We are going to use Apple iMacs and a set of data that we can download from a resource to work with.  if you have not used an iMac before, the "command line", or a piece of software called [RStudio](https://www.rstudio.com/), then we have a few preliminaries to go through.
+
+### Our computers
+
+Let's start off with RStudio.  Depending on the setup, you may either have an RStudio icon on your machine, or you will have to go start one.  
+
+<img src="icons.png"" alt="thing" width="200"/>
+
+For us in this short practical, we have an icon on the application bar at the base of the screen.  It's the blue circle with "R" in white writing inside it.  On the icon, just double click on it.  If you want to start one another way, click on the search magnifier icon in the top right of the screen, and type "RStudio".  Either way, the result is a session of the program RStudio opening after a few seconds. RStudio is a nice glossy way to use a statistical language called R.  
+
+[R](https://www.r-project.org/) is derived from a statistical language called S, that was developed by Ross Ihaka (of Ngati Kahungunu, Rangitane and Ngati Pakeha descent) & Robert Gentlemen (statisticians at the University of Auckland) who wanted to make a basic version of S for teaching purposes. Oh, and R - "comes before S" - from 2 guys whose first initial was R!!
+
+**NB: We do not unfortunately have the time to go too much into the backgrond theory on what we are doing here, we are doing 90 minutes of an overview that would take hours of a University course to teach.**
+
+
+### Our data source
+
+On the desktop you will see a folder called "bioinformatics":
+
+<img src="bioinformaticsFolder.png"" alt="thing" width="100"/>
+
+We will work with a couple of test folders from the "bioinformatics" folder.  You should see the "bioinformatics" folder on your desktop.  Double click on it and go to the "SING-Aotearoa2019" folder (there are lots of folders in there).  Click on the folder once and then, copy the folder to your Desktop before you do anything else.
+
+XXXXXXXXXXX more needed here XXXXXXXXXXX
+
+### Our environment
+
+So let's look at RStudio in a little more detail.  Again, this is a brief introduction to give you a flavour.  on opening RStudio, you should see four windows, of which we are mostly worried about the two on the left hand side.  
+
+<img src="Rstudio.png"" alt="thing" width="600"/>
+
+Think of the top window -- the source -- as where we ask the software to do stuff, and the bottom window -- the console -- as to where it happens.  For now, that is all you need to know.
+
+If we get time, we will also .....
+
+
+---
 
 ## Overview of the session
 
@@ -27,15 +75,16 @@ We are planning on covering the following in our 90 minute session:
     * What did we learn?
 * Assembly
     * Brief theory
-    * Attempt with these reads (or a subset) – tbd 
+    * Attempt with these reads (or a subset) 
     * What did we learn?
+
 ---
 
 ## Mapping of reads to a reference genome
 
 ### Fastq format
 
-A brief overview of the format can be found at [FASTQ_format](https://en.wikipedia.org/wiki/FASTQ_format). Please have a look at this file to familairse yourself with the fact that each sequence covers 4 lines of text, and has much more information in it than a standard fasta file:
+A brief overview of the format can be found at the [FASTQ_format](https://en.wikipedia.org/wiki/FASTQ_format) wiki page. Please have a look at this file to familairse yourself with the fact that each sequence covers 4 lines of text, and has much more information in it than a standard fasta file:
 
 > read header (usually starts with '@')
 >
@@ -53,7 +102,9 @@ This is in comparison to a much simpler fasta file:
 
 For the purposes of today, we want to encode a quality value called *Q* -- **how confident we are that the base is called as being incorrect** -- as a probability *p*.  As you can imagine this is an issue as a value of *p* will have more than 1 character, but it refers to a single base, be that A, C, G or T.  Therefore, how do we do this?  We use an equation to relate *p* to *Q* thus:
 
-<img src="FastqEquation.png" alt="thing" width="200"/>
+<img src="FastqEquation.png"" alt="thing" width="200"/>
+
+![Fig. 2: The fastq quality equation](FastqEquation.png){:height="50%" width="50%}
 
 Many pieces of software are able to automatically determine the encoding system used (yes, there is more than one, sigh), so they can convert between the two.  This has implications for the mapping of short reads to a reference genome using mapping software such as [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) or [BWA](http://bio-bwa.sourceforge.net/), but first we have to lok at our main file type, an "industry standard" if you like.
 
@@ -78,7 +129,7 @@ Many pieces of software are able to automatically determine the encoding system 
 ### Brief theory
 
 
-### Attempt with these reads (or a subset) – tbd 
+### Attempt with these reads 
 
 
 
