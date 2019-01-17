@@ -104,7 +104,7 @@ For the purposes of today, we want to encode a quality value called *Q* -- **how
 
 <img src="FastqEquation.png"" alt="thing" width="200"/>
 
-![Fig. 2: The fastq quality equation](FastqEquation.png){:height="50%" width="50%}
+%![Fig. 2: The fastq quality equation](FastqEquation.png){:height="50%" width="50%}
 
 Many pieces of software are able to automatically determine the encoding system used (yes, there is more than one, sigh), so they can convert between the two.  This has implications for the mapping of short reads to a reference genome using mapping software such as [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) or [BWA](http://bio-bwa.sourceforge.net/), but first we have to lok at our main file type, an "industry standard" if you like.
 
