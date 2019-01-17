@@ -1,4 +1,6 @@
 theme: jekyll-theme-cayman
 markdown: kramdown
-title: Bioinformatics practical for 2019 SING-Aotearoa session
+title: Bioinformatics practical for the 2019 SING-Aotearoa session
 description: A brief introduction to looking at new sequencing technologies.
+author:
+name: Some Person
