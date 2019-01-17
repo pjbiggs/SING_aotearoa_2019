@@ -55,7 +55,7 @@ XXXXXXXXXXX more needed here XXXXXXXXXXX
 
 So let's look at RStudio in a little more detail.  Again, this is a brief introduction to give you a flavour.  on opening RStudio, you should see four windows, of which we are mostly worried about the two on the left hand side.  
 
-<img src="Rstudio.png" alt="thing" width="600"/>
+<img src="Rstudio.PNG" alt="thing" width="600"/>
 
 Think of the top window -- the source -- as where we ask the software to do stuff, and the bottom window -- the console -- as to where it happens.  For now, that is all you need to know.
 
