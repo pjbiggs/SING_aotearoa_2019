@@ -4,8 +4,10 @@
 
 This is taking place on Wednesday 23rd January 2019 at 1330 -- 1500 in C5-10, Science Tower C, Massey University, Palmerston North.
 
+By:- Patrick J Biggs and Ann McCartney
 
-## Some background on next generating sequnecing
+
+## Some background on next generating sequncing
 
 
 
@@ -36,7 +38,7 @@ Let's start off with RStudio.  Depending on the setup, you may either have an RS
 
 For us in this short practical, we have an icon on the application bar at the base of the screen.  It's the blue circle with "R" in white writing inside it.  On the icon, just double click on it.  If you want to start one another way, click on the search magnifier icon in the top right of the screen, and type "RStudio".  Either way, the result is a session of the program RStudio opening after a few seconds. RStudio is a nice glossy way to use a statistical language called R.  
 
-[R](https://www.r-project.org/) is derived from a statistical language called S, that was developed by Ross Ihaka (of Ngati Kahungunu, Rangitane and Ngati Pakeha descent) & Robert Gentlemen (statisticians at the University of Auckland) who wanted to make a basic version of S for teaching purposes. Oh, and R - "comes before S" - from 2 guys whose first initial was R!!
+[R](https://www.r-project.org/) is derived from a statistical language called S, that was developed by Ross Ihaka (of Ngati Kahungunu, Rangitane and Ngati Pakeha descent) & Robert Gentlemen (statisticians at the University of Auckland) who wanted to make a basic version of S for teaching purposes. Oh, and R - "comes before S" - from 2 guys whose first initial is R!!
 
 **NB: We do not unfortunately have the time to go too much into the backgrond theory on what we are doing here, we are doing 90 minutes of an overview that would take hours of a University course to teach.**
 
@@ -45,22 +47,29 @@ For us in this short practical, we have an icon on the application bar at the ba
 
 On the desktop you will see a folder called "bioinformatics":
 
-<img src="bioinformaticsFolder.png" alt="thing" width="100"/>
+![](bioinformaticsFolder.png)
 
-We will work with a couple of test folders from the "bioinformatics" folder.  You should see the "bioinformatics" folder on your desktop.  Double click on it and go to the "SING-Aotearoa2019" folder (there are lots of folders in there).  Click on the folder once and then, copy the folder to your Desktop before you do anything else.
+We will work with a couple of test folders from the "bioinformatics" folder.  You should see the "bioinformatics" folder on your desktop.  Double click on it and go to the "SING-Aotearoa2019" folder (there are lots of folders in there).  Click on the folder once and then, copy the folder to your Desktop before you do anything else.  We will work with the contents of this folder.
 
 XXXXXXXXXXX more needed here XXXXXXXXXXX
 
 ### Our environment
 
-So let's look at RStudio in a little more detail.  Again, this is a brief introduction to give you a flavour.  on opening RStudio, you should see four windows, of which we are mostly worried about the two on the left hand side.  
+So let's look at RStudio in a little more detail.  Again, this is a brief introduction to give you a flavour.  On opening RStudio, you should see four windows, of which we are mostly worried about the two on the left hand side hte right two not so much.  
 
-<img src="Rstudio.PNG" alt="thing" width="600"/>
+![](Rstudio.PNG)
 
-Think of the top window -- the source -- as where we ask the software to do stuff, and the bottom window -- the console -- as to where it happens.  For now, that is all you need to know.
+Think of the top window -- the source -- as where we ask the software to do stuff, and the bottom window -- the console -- as to where it happens.  For today, that is all you need to know.  We are doing something here to try to stop this from being "ahh, it's all new", so we are keeping to only this single tool, but trust me, we can do a lot here, and there is alot going on behind the scenes.
 
-If we get time, we will also .....
+For the sake of time, we are also doing copying and pasting from the text in the style below into the source window.  It's in a different font:
 
+`library(ggplot2)`
+
+So if we copy this text into the source window, highlight the line and hit the run button, we see a response in te console below.  Let's give it a try....
+
+![](Rinstructions.png)
+
+Ok, you should see something like the following in te console (number 6), if not please raise your hand to get help.  What we have done here is not so imporant (loaded a pre-packed piec of R software called a library) as the fact you have run a command in RStudio and it did something.  Well done!
 
 ---
 
@@ -102,17 +111,32 @@ This is in comparison to a much simpler fasta file:
 
 For the purposes of today, we want to encode a quality value called *Q* -- **how confident we are that the base is called as being incorrect** -- as a probability *p*.  As you can imagine this is an issue as a value of *p* will have more than 1 character, but it refers to a single base, be that A, C, G or T.  Therefore, how do we do this?  We use an equation to relate *p* to *Q* thus:
 
-<img src="FastqEquation.png"" alt="thing" width="200"/>
+<img src="FastqEquation.png" alt="thing" width="200"/>
 
-%![Fig. 2: The fastq quality equation](FastqEquation.png){:height="50%" width="50%}
-
-Many pieces of software are able to automatically determine the encoding system used (yes, there is more than one, sigh), so they can convert between the two.  This has implications for the mapping of short reads to a reference genome using mapping software such as [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) or [BWA](http://bio-bwa.sourceforge.net/), but first we have to lok at our main file type, an "industry standard" if you like.
+Many pieces of software are able to automatically determine the encoding system used (yes, there is more than one, sigh), so they can convert between the two.  This has implications for the mapping of short reads to a reference genome using mapping software such as [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) or [BWA](http://bio-bwa.sourceforge.net/), but first we have to look at our main file type, an "industry standard" if you like.
 
 ### SAM/BAM files
 
 
 
 ### Visualisation of mapping
+
+The first thing we have to do is map our reads to the reference chloroplast.  From this morning, you have worked in pairs, and we will keep those pairs for this afternoon's practical.  You have been allocated a sample at random as per the table below:
+
+| pair | name   | sample   | pair  |   name | sample   |
+|------|:------:|:--------:|-------|:------:|:--------:|
+| tahi |        | 008      | ono   |        | 026      |
+| rua  |        | TLs      | whitu |        | 036      |
+| toru |        | 026      | waru  |        | 008      |
+| wha  |        | 038      | iwa   |        | 038      |
+| rima |        | 036      | tekau |        | Tls      |
+
+<!---made using https://www.tablesgenerator.com/markdown_tables# --->
+
+So, let's start using RStudio to do the mapping.  
+
+`library(ggplot2)`
+
 
 
 
@@ -142,7 +166,5 @@ Many pieces of software are able to automatically determine the encoding system 
 
 
 
-So, let's get going in R:
 
-`library(ggplot2)`
 
