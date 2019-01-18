@@ -175,32 +175,32 @@ Let's start using RStudio to do some investigation.  In the folder you will find
 
 ## our reference genome  
 
-refSeq  <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/reference/Eucalyptus_grandis_chloroplastic_genome.txt")
-refIn		<- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/reference/EuGrandisChl")
+refSeq <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/reference/Eucalyptus_grandis_chloroplastic_genome.txt")
+refIn <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/reference/EuGrandisChl")
 
 ## variables for doing the work ##
 #
 # in the next 7 lines, you have to change the 'XXXX' to your allocated sample
 # if you do not do this, this will not work
 #
-#####
+#####################
 
 read1 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/XXXX_subsetR1.fq")
 read2 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/XXXX_subsetR2.fq")
 Sam <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX.sam");
-Bam	<- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX.bam");
+Bam <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX.bam");
 BamSort	<- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted");
 BamSort1 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted.bam");
 inPileUp <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/pileupXXXX.txt");
 
 
-## run a bowtie build on the reference ##
+## run a bowtie2-build on the reference ##
 
 system(paste("/Users/bioinformatics/Applications/bowtie2/bowtie2-build", refSeq, refIn))
 system(paste("/Users/bioinformatics/Applications/samtools/samtools faidx", refSeq))
 
 
-## let's do the mapping ##
+## let's do the mapping with bowtie2 ##
 
 system(paste("/Users/bioinformatics/Applications/bowtie2/bowtie2 --end-to-end -x ", refIn, " -1 ", read1, " -2 ", read2, " -S ", Sam))
 system(paste("/Users/bioinformatics/Applications/samtools/samtools view -bS ", Sam, " > ", Bam))
