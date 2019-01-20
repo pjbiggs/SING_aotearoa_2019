@@ -4,11 +4,43 @@ This is taking place on Wednesday 23rd January 2019 at 1330 -- 1500 in C5-10, Sc
 
 By:- Patrick J Biggs and Ann McCartney
 
+---
+
+# Overview of the session
+
+We are planning on covering the following in our 90 minute session:
+
+* Some background on next generating sequencing
+* What are we going to do?
+    * What is a chloroplast?
+    * How are going to do the practical?
+        * Our computers
+        * Our data source
+        * Our environment
+* Mapping of reads to a reference genome
+    * Fasta format
+    * Fastq format
+        * Mapping quality
+    * SAM/BAM files
+    * Visualisation of mapping
+        * Let's map some reads!
+        * Getting an idea of the mapping as a whole
+        * A simple analysis of some SNPs of interest
+        * What's the overall picture looking like?
+        * What did we learn from this mapping example?
+* Assembly
+    * Brief theory
+    * Attempt with our reads
+    * Analysis of the output
+    * What did we learn?
+* Session Summary
+---
+
 
 # Some background on next generating sequencing
 
 
-
+---
 
 # What are we going to do?
 
@@ -27,17 +59,7 @@ Chloroplasts are cell organelles that are only found in plant cells. They utilis
 
 ![](chloroplastsinplantcell.jpg)
 
-
-```
-
-In the dropbox David put in an image to show the distribution of Manuka and I think that needs to be put in here after “SNPs that can locate the samples to geographical locations”
-
-```
-
-
-
-
-
+<!---In the dropbox David put in an image to show the distribution of Manuka and I think that needs to be put in here after “SNPs that can locate the samples to geographical locations”--->
 
 We will go into this into certain aspects of this in a little more detail later, but the chloroplast we are looking at is ~160kb in length, and a genomic map of this chloroplast is shown below.
 
@@ -49,11 +71,11 @@ We have our reference genome, and also our short reads that we are going to do t
 
 ---
 
-# How are going to do it?
+## How are going to do the practical?
 
 We are going to use Apple iMacs and a set of data that we can download from a resource to work with.  If you have not used an iMac before, the "command line", or a piece of software called [RStudio](https://www.rstudio.com/), then we have a few preliminaries to go through.
 
-## Our computers
+### Our computers
 
 Let's start off with RStudio.  Depending on the setup, you may either have an RStudio icon on your machine, or you will have to go start one.  
 
@@ -66,7 +88,7 @@ For us in this short practical, we have an icon on the application bar at the ba
 **NB: We do not unfortunately have the time to go too much into the background theory on what we are doing here, we are doing 90 minutes of an overview that would take hours of a University course to teach in far more detail.**
 
 
-## Our data source
+### Our data source
 
 On the desktop you will see a folder called "bioinformatics":
 
@@ -78,7 +100,7 @@ So, what do we have in this folder to work with?
 
 XXXXXXXXXXX more needed here XXXXXXXXXXX
 
-## Our environment
+### Our environment
 
 So let's look at RStudio in a little more detail.  Again, this is a brief introduction to give you a flavour.  On opening RStudio, you should see four windows, of which we are mostly worried about the two on the left hand side, the two on the right hand side not so much.  
 
@@ -101,25 +123,6 @@ Either way, this is the code we want to use.  If we copy this text into the sour
 ![](Rinstructions.png)
 
 Ok, you should see something like the following in the console (number 6), if not please raise your hand to get some help.  What we have done here is not so important (we have loaded a pre-packed piece of R software called a library) as the fact you have run a command in RStudio and it did something.  Well done!  We are going to be doing more of this soon...
-
----
-
-# Overview of the session
-
-We are planning on covering the following in our 90 minute session:
-
-* Mapping
-    * Sequencing files
-        * Fasta format
-        * Fastq format
-    * Mapping
-        * SAM/BAM files
-    * Visualisation of mapping
-    * What did we learn?
-* Assembly
-    * Brief theory
-    * Attempt with our reads
-    * What did we learn?
 
 ---
 
@@ -205,7 +208,7 @@ The first thing we have to do is map our reads to the reference chloroplast.  Fr
 
 Let's start using RStudio to do some investigation.  In the folder you will find a file called "bowtie2mapper.r".  We are going to use this file in RStudio to map your allocated reads to the reference. The code looks like:
 
-```
+`
 ### SING-Aotearoa 2019 Bioinformatics practical ###
 
 # part one - mapping reads to a reference #
@@ -217,7 +220,7 @@ refIn		<- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/reference/EuG
 
 ## variables for doing the work ##
 #
-# in the next 7 lines, you have to change the 'XXXX' to your allocated sample
+# in the next 9 lines, you have to change the 'XXXX' to your allocated sample
 # if you do not do this, this will not work
 #
 #####
@@ -230,7 +233,7 @@ BamSort	<- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resu
 BamSort1 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted.bam");
 BamSort1In <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted.bam.bai");
 inPileUp <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/pileupXXXX.txt");
-
+inPileUpSmall <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/pileupXXXX_small.txt");
 
 ## run a bowtie build on the reference ##
 
@@ -245,11 +248,11 @@ system(paste("/Users/bioinformatics/Applications/samtools/samtools view -bS ", S
 system(paste("/Users/bioinformatics/Applications/samtools/samtools sort ", Bam, BamSort))
 system(paste("/Users/bioinformatics/Applications/samtools/samtools index ", BamSort1))
 system(paste("/Users/bioinformatics/Applications/samtools/samtools mpileup -B -d 1000 -f", refSeq, BamSort1, ">", inPileUp))
-```
+`
 
 There's lots here, which is why you have this is a file.  
 
-But wait, it's not that easy.  We have left out the most important bit, and that is that you have to edit the code to work on your samples.  As written the code will not work!  In lines 15 to 21, there are 7 lines of code to edit:
+But wait, it's not that easy.  We have left out the most important bit, and that is that you have to edit the code to work on your samples.  As written the code will not work!  In lines 15 to 23, there are 9 lines of code to edit:
 
 1. Simply replace the value "XXXX" with the value in the 'sample' in the table above.
 2. Save the file with a different name.
@@ -258,32 +261,86 @@ But wait, it's not that easy.  We have left out the most important bit, and that
 Ok, looking at the code, what does it say?  Please do not worry too much about the detail, if you can edit the code and get a resulting mapping file that is great, as we can then go on to the next bit.  However, in brief:
 
 
+### Getting an idea of the mapping as a whole 
 
+Can we look at some overall summaries of the way the mapping has worked?  Please remember that we are looking at 160,137bp of sequence here in our reference genome.
 
-
-
-### A simple analysis of some SNPs of interest
-
-This is the heart of what we are doing in the session, looking at individual regions of the chloroplast at really high resolution.  
-
-We have 10 SNPs, of which 3 have been amplified this morning.  We shall have a look at some of them now.  We know the location of the SNPs, so how do we analyse the region?  We have to load some of these packages to allow the software to perform certain functions for us:
+We have to load some of these packages to allow the software to perform certain functions for us, on our sequence object -- the Bam file we just created called "BamSort1".  Let's just check it out to see how well our reads mapped to it:
 
 ```
 # we shall load some libraries
 
 library("GenomicRanges")
 library("GenomicAlignments")
-```
 
-We are going to look at the variable called "BamSort1" that is our Bam file.  Let's just check it out to see how well our reads mapped to it:
-
-```
 # we shall perform a quick summary analysis on our mapped Bam file
 
 idxstatsBam(BamSort1, index=BamSort1In)
 ```
 
 We can see now that we have 250,000 reads that have mapped to the reference NC_014570, and there are 0 reads unmapped.  Is that what you see for your sample?
+
+What else can we do?  We can have a look at the way the reads have mapped to the reference.  
+
+```
+# read in the sequence alignments
+
+x <- readGAlignments(BamSort1)
+
+# calculate the coverage values and print the output to screen
+
+xcov <- coverage(x)
+xcov
+```
+
+We miss out lots of information here when it is printed to screen.  Can we look at it graphically?  Yes we can:
+
+```
+# capture the range of our reference
+
+z <- GRanges("NC_014570.1",IRanges(1,160137))
+
+# subset the coverage of the region of interest, convert it and print out an image
+
+xcov[z] 
+xnum <- as.numeric(xcov$NC_014570.1[ranges(z)])
+plot(xnum, col = 'red', lwd=0.1, main = "coverage of chloroplast", xlab = "position (bp)", ylab = "sequencing depth")
+
+```
+
+This result might take a few seconds to generate, and has all the sequencing depth information for the mapping.  There is not really ever uniform across the reference for a variety of reasons.  This is to much data to look at, so just pick a random distance of say 10000 bp in the reference (between 1 and 160,137), and see what the sequencing depth is.  Tty again, with a random start and end point in the below.  You have to enter values, and remember to keep the comma there too:
+
+```
+z <- GRanges("NC_014570.1",IRanges(--start--,--end--))
+
+# subset the coverage of the region of interest, convert it and print out an image
+
+xcov[z] 
+xnum <- as.numeric(xcov$NC_014570.1[ranges(z)])
+plot(xnum, col = 'blue', lwd=0.1, main = "coverage of a random section of the chloroplast", xlab = "position (bp)", ylab = "sequencing depth")
+
+```
+
+Your random section might show all kinds of things is detail, depending on your sample and the region. If you had a gene of interest, you might want to look at that.  Let's do that right now, and in fact this is a gene where some of the SNPs we are going to look at shorly can be found.  This is the *atpA* gene:
+
+```
+z <- GRanges("NC_014570.1",IRanges(11193,12716))
+
+# subset the coverage of the region of interest, convert it and print out an image
+
+xcov[z] 
+xnum <- as.numeric(xcov$NC_014570.1[ranges(z)])
+plot(xnum, col = 'steelblue', lwd=1, main = "coverage of the atpA gene on the chloroplast", xlab = "position (bp)", ylab = "sequencing depth")
+
+```
+
+from these plots, you can see that we have ~300 fold sequencing depth, this means that on average any position in our chloroplast have many reads that map to it.
+
+### A simple analysis of some SNPs of interest
+
+This is the heart of what we are doing in the session, looking at individual regions of the chloroplast at really high resolution.  
+
+We have 10 SNPs, of which 3 have been amplified this morning.  We shall have a look at some of them now.  We know the location of the SNPs, so how do we analyse the region?  
 
 Now we are going to look at 5 regions of the chloroplast genome where we know there are SNPs that help us locate our samples. Please be aware there are many other SNPS beyond these 5 we are interested in.  **Because mapping causes slight variations in the way the bases are mapped, we have to look at a region and then sequence within that.**  The following table shows 5 regions for us to look at.  Again, using these regions in the code below, as well as the supplied DNA sequence, please make a note of the DNA base that is the 4th one after the sequence supplied in the table below, as that is our DNA base of interest:
 
@@ -295,7 +352,7 @@ Now we are going to look at 5 regions of the chloroplast genome where we know th
 | cpManuka_35755 | AGAGGGGGCCGTGTACG  |   Australian  |        C        |     A     | 35700 | 35799 |
 | cpManuka_44986 | CGAGCACCATGGAAATA  |  South Island |        G        |     G     | 44950 | 45049 |
 
-If your sammple is from the geographic location you should see the DNA base in the column "Allele targeted" above. Unfortunately this is not absolute, but it gives you an idea.  We shall discuss this in a while, as this is a small exmaple to illustrate the principles of how this process can work.
+If your sample is from the geographic location you should see the DNA base in the column "Allele targeted" above. Unfortunately this is not absolute, but it gives you an idea.  We shall discuss this in a while, as this is a small exmaple to illustrate the principles of how this process can work.
 
 How do we do this by code?  Let's use and run the following:
 
@@ -309,19 +366,43 @@ options(showTailLines=50)
 stackStringsFromBam(BamSort1, param=GRanges("NC_014570.1",IRanges(--start--,--end--)))
 ```
 
-Please replace the "--start--" and "--end--" with the values in the table below, and then run your code.  **Keeping the comma in between them is important, so please make sure it is there, otherwise it will not work.**  This will print out the alignment for 100 bp in your region of interest to the console.
-
-### Getting an idea of the mapping as a whole 
+Please replace the "--start--" and "--end--" with the values in the table below, and then run your code.  **Keeping the comma in between them is important, so please make sure it is there, otherwise it will not work.**  This will print out the alignment for 100 bp in your region of interest to the console.  Try to find the sequence from the table, and then the 4th base after it.
 
 
 
 
+If you back to the SING-Aotearoa folder on the desktop, you made a file called "pileupXXXX.txt" where XXXX is your sample name.  this is a big file, so we are going to make a smaller version, of say the first 5000 positions:
 
-## What did we learn from this?
+```
+system(paste("head -n 5000" inPileUp, ">", inPileUpSmall))
+
+```
+
+We defined the names of these files at the start of this part. Click on the file "pileupXXXX_small.txt" and then right click to open with a text editor called TextWrangler.  If you scroll up and down the file, you should see something like the below:
+
+<p align="center"/><img src="mPileUp.png" alt="thing" width="600"/>
+
+We have a 6 column output here:
+
+1. Our reference genome - NC_014570.1	
+2. Each base pair is a line - for example 356	
+3. The reference base at that position - in this case A	
+4. The number of times this base has been sequenced - in this case 23
+5. The sequence observed from our sample	- in this case CCCCCCCCCCCCCCCCCCCCCCC	
+6. The quality of the mapped bases - in this case FFFFFFFFFFFFFFFFFFFFFFF
+
+On scrolling any sequences in the 5th column indicate varation against the reference, and there is a fair amount. **Please remeber that we have mapped our sample reads to a related species, so the variation of not comparing like to like is evident.**  There are other kinds of variation visible, but we migt have to leave those for now in the interests of time.
 
 
+### What did we learn from this mapping example?
 
+Ok, so we will stop at this point and discuss our results from the whole group.  Questions to discuss include:
 
+* Can we locate our samples?
+* Do we have good evidence for that?
+* Was this a useful exercise?
+
+Now, we will do some thing completely different.
 
 ---
 
@@ -354,12 +435,13 @@ https://www.youtube.com/watch?v=ToKUGz_YhC4
 
 
 
+## Analysis of the output
+
+
 ---
 
-# Summary
+# Session Summary
 
+We have come to the end of our session.  We hope this has been a brief useful introduction to bioinformatics, and a good logical progression to the lab work this morning.  We have seen that there is a tip to the iceberg, and that is about it that we have in the time we have available.  Obviously we could discuss this for a lot longer, as we could all aspects of the course.
 
-
-
-
-
+We have performed "dry lab" sience this afternoon, having done "wet lab" science this morning.  Data is now a part of our lives, and the sequencing revolution in the biological sciences has changed what we do, and th questions we can ask.
