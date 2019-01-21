@@ -1,8 +1,6 @@
 <!---pjbiggs.github.io--->
 
-This is taking place on Wednesday 23rd January 2019 at 1330 -- 1500 in C5-10, Science Tower C, Massey University, Palmerston North.
-
-By:- Patrick J Biggs and Ann McCartney
+![](NewHeader.jpg)
 
 ---
 
@@ -56,7 +54,7 @@ Following on from this morning's work, we are going to look at how short sequenc
 This is from a page on the [T.E.R.R.A.I.N](http://www.terrain.net.nz/friends-of-te-henui-group/trees-native-botanical-names-g-to-l/manuka.html) website.
 
 
-Your task is to try and find out information about the 5 samples to see where they come from. It could be one of 5 locations:
+Your task is to try and find out information about the 5 samples to see where they come from. It could be from one of 5 locations:
 
 * Northland
 * East Cape
@@ -108,9 +106,16 @@ On the desktop you will see a folder called "bioinformatics":
 
 We will work with a couple of test folders from the "bioinformatics" folder.  You should see the "bioinformatics" folder on your desktop.  Double click on it and go to the "SING-Aotearoa2019" folder (there are lots of folders in the "bioinformatics folder" from other courses that are run using these computers).  Click on the folder once and then, copy the folder to your Desktop before you do anything else.  We will work with the contents of this folder.
 
-So, what do we have in this folder to work with?  
+So, what do we have in this folder to work with?  A screenshot of the folder is below:
 
-XXXXXXXXXXX more needed here XXXXXXXXXXX
+![](folderContents.png)
+
+We have a file called "bowtie2mapper.r", and then 3 folders of interest right now called:
+
+* sourceReads - where the reads we are going to work with live
+* results - where we will place our results
+* reference - where our chloroplast reference lives
+
 
 ### Our environment
 
@@ -118,7 +123,9 @@ So let's look at RStudio in a little more detail.  Again, this is a brief introd
 
 ![](Rstudio.PNG)
 
-Think of the top window -- the source -- as where we ask the software to do things for us, and the bottom window -- the console -- as  where it happens.  For today, that is all you need to know.  We are doing something here to try to stop this from being "ahh, it's all new", so we are keeping to only this single tool, but trust me, we can do a lot here, and there is alot going on behind the scenes.
+Think of the top window -- the source -- as where we ask the software to do things for us, and the bottom window -- the console -- as  where it happens.  In other words, we are going to copy and paste text into the top left window, and we see results in the bottom left window.  For today, that is all you need to know.  
+
+We are dealing with lots of new concepts simultaneously here, and we are trying to make this understandable, rather than  "ahh, it's all new and too complicated", Therefore, we are keeping to only a single piece of software today, but trust me, we can do a lot here, and there is alot going on behind the scenes.
 
 For the sake of time, we are also doing copying and pasting from the text in the style below into the source window.  It's in a different font:
 
@@ -130,11 +137,11 @@ or it might be in a box that looks like this:
 library(ggplot2)
 ```
 
-Either way, this is the code we want to use.  If we copy this text into the source window, highlight the line it is on and hit the run button, we see a response in the console below.  Let's give it a try with this line of code....
+Either way, this is the code we want to use.  Your top left -- source -- window should be empty.  If we copy this text into the source window, highlight the line it is on and hit the run button, we see a response in the console below.  Let's give it a try with this line of code....
 
 ![](Rinstructions.png)
 
-Ok, you should see something like the following in the console (number 6), if not please raise your hand to get some help.  What we have done here is not so important (we have loaded a pre-packed piece of R software called a library) as the fact you have run a command in RStudio and it did something.  Well done!  We are going to be doing more of this soon...
+Ok, you should see something like the following in the console (number 6), if not please raise your hand to get some help.  What we have done here is not so important (we have loaded a pre-packed piece of R software called a library that does a great many things for us) as the fact you have run a command in RStudio and it did something.  Well done!  We are going to be doing more of this soon...
 
 ---
 
@@ -218,7 +225,11 @@ The first thing we have to do is map our reads to the reference chloroplast.  Fr
 
 <!---made using https://www.tablesgenerator.com/markdown_tables# --->
 
-Let's start using RStudio to do some investigation.  In the folder you will find a file called "bowtie2mapper.r".  We are going to use this file in RStudio to map your allocated reads to the reference. The code looks like:
+Let's start using RStudio to do some investigation.  In the folder you will find a file called `bowtie2mapper.r`.  We are going to open and use this file in RStudio to map your allocated reads to the reference. Open the file by performing the following in RStudio:
+
+`File > Open file > /Desktop/SING-Aotearoa2019/bowtie2mapper.r`
+
+In your source window -- in lots of colour -- the code should look like the below.  **lines that star with a `#` are comments and the sofware does nothing with them, they are there for information.**  
 
 ```
 ### SING-Aotearoa 2019 Bioinformatics practical ###
@@ -253,6 +264,7 @@ inPileUp <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/pil
 inPileUpSmall <- 
 as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/pileupXXXX_small.txt");
 
+
 ## run a bowtie build on the reference ##
 
 system(paste("/Users/bioinformatics/Applications/bowtie2/bowtie2-build ", refSeq, refIn))
@@ -268,6 +280,9 @@ system(paste("/Users/bioinformatics/Applications/samtools/samtools sort ", Bam, 
 system(paste("/Users/bioinformatics/Applications/samtools/samtools index ", BamSort1))
 system(paste("/Users/bioinformatics/Applications/samtools/samtools mpileup -B -d 1000 -f", 
 refSeq, BamSort1, ">", inPileUp))
+
+
+## all complete for now
 ```
 
 There's lots here, which is why you have this as a file, it will take too long to copy and paste.  
@@ -276,9 +291,18 @@ But wait, it's not that easy.  We have left out the most important bit, and that
 
 1. Simply replace the value "XXXX" with the value in the 'sample' in the table above.
 2. Save the file with a different name.
-3. As described above, run the code line by line. Allow time for things to happen (some are quick, ome not so).
+3. As described above, run the code line by line. Allow time for things to happen (some are quick, some not so).
 
-Ok, looking at the code, what does it say?  Please do not worry too much about the detail, if you can edit the code and get a resulting mapping file that is great, as we can then go on to the next bit.  However, in brief:
+Ok, looking at the code, what does it say?  You can ignore the next bit if you want:
+
+> Define all our variables
+> Make the correct file from the reference for bowtie2 to use
+> Make an index of that file (useful for later)
+> Map your reads to the reference to make a SAM file
+> Convert this to a BAM file, sort it and index it
+> Run a separate command to generate a further text output file 
+
+Please do not worry too much about the detail, if you can edit the code and get a resulting mapping file that is great, as we can then go on to the next part.
 
 
 ### Getting an idea of the mapping as a whole 
@@ -288,19 +312,28 @@ Can we look at some overall summaries of the way the mapping has worked?  Please
 We have to load some of these packages to allow the software to perform certain functions for us, on our sequence object -- the Bam file we just created called "BamSort1".  Let's just check it out to see how well our reads mapped to it:
 
 ```
-# we shall load some libraries
+# we shall load a couple of libraries
 
-library("GenomicRanges")
+library("Rsamtools")
 library("GenomicAlignments")
+
+# we shall change our variable names
+#
+# remember again to replace the "XXXX" with your sample name
+
+Bam <- ("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX.bam");
+BamSort	<- ("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted");
+BamSort1 <- ("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted.bam");
+BamSort1In <- ("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted.bam.bai");
 
 # we shall perform a quick summary analysis on our mapped Bam file
 
-idxstatsBam(BamSort1, index=BamSort1In)
+idxstatsBam(BamSort1, index=BamSort1)
 ```
 
-We can see now that we have 250,000 reads that have mapped to the reference NC_014570, and there are 0 reads unmapped.  Is that what you see for your sample?
+Once again, you wil have to change the "XXXX" to your sample.  We can see now that we have 250,000 reads that have mapped to the reference NC_014570, and there are 0 reads unmapped.  Is that what you see for your sample?
 
-What else can we do?  We can have a look at the way the reads have mapped to the reference.  
+What else can we do?  A great deal, but again w are short on time.  However ome thing we can do is have a look at the way the reads have mapped to the reference.  
 
 ```
 # read in the sequence alignments
@@ -313,7 +346,7 @@ xcov <- coverage(x)
 xcov
 ```
 
-We miss out lots of information here when it is printed to screen.  Can we look at it graphically?  Yes we can:
+We miss out lots of information here when it is printed to the console like this.  Can we look at it graphically?  Yes we can:
 
 ```
 # capture the range of our reference
@@ -328,7 +361,7 @@ plot(xnum, col = 'red', lwd=0.1, main = "coverage of chloroplast", xlab = "posit
 ylab = "sequencing depth")
 ```
 
-This result might take a few seconds to generate, and has all the sequencing depth information for the mapping.  There is not really ever uniform across the reference for a variety of reasons.  This is to much data to look at, so just pick a random distance of say 10000 bp in the reference (between 1 and 160,137), and see what the sequencing depth is.  Tty again, with a random start and end point in the below.  You have to enter values, and remember to keep the comma there too:
+This result might take a few seconds to generate the figure, and has all the sequencing depth information for the mapping.  There is not really ever uniform across the reference for a variety of reasons.  This is to much data to look at, so just pick a random distance of say 10,000 bp in the reference (between 1 and 160,137), and see what the sequencing depth is.  Tty again, with a random start and end point in the below.  You have to enter values, and remember to keep the comma there too:
 
 ```
 z <- GRanges("NC_014570.1",IRanges(--start--,--end--))
@@ -341,7 +374,7 @@ plot(xnum, col = 'blue', lwd=0.1, main = "coverage of a random section of the ch
 xlab = "position (bp)", ylab = "sequencing depth")
 ```
 
-Your random section might show all kinds of things is detail, depending on your sample and the region. If you had a gene of interest, you might want to look at that.  Let's do that right now, and in fact this is a gene where some of the SNPs we are going to look at shorly can be found.  This is the *atpA* gene:
+Your random section might show all kinds of things in detail, depending on your sample and the region. If you had a gene of interest, you might want to look at that too.  Let's do that right now, and in fact this is a gene where some of the SNPs we are going to look at shorly can be found.  This is the *atpA* gene:
 
 ```
 z <- GRanges("NC_014570.1",IRanges(11193,12716))
@@ -354,7 +387,7 @@ plot(xnum, col = 'steelblue', lwd=1, main = "coverage of the atpA gene on the ch
 xlab = "position (bp)", ylab = "sequencing depth")
 ```
 
-from these plots, you can see that we have ~300 fold sequencing depth, this means that on average any position in our chloroplast have many reads that map to it.
+From these three plots, you can see that we have ~300 fold sequencing depth, this means that on average any position in our chloroplast have many (say around 300) individuals reads that map to the region where that position is.
 
 ### A simple analysis of some SNPs of interest
 
@@ -388,20 +421,23 @@ stackStringsFromBam(BamSort1, param=GRanges("NC_014570.1",IRanges(--start--,--en
 
 Please replace the "--start--" and "--end--" with the values in the table below, and then run your code.  **Keeping the comma in between them is important, so please make sure it is there, otherwise it will not work.**  This will print out the alignment for 100 bp in your region of interest to the console.  Try to find the sequence from the table, and then the 4th base after it.
 
+People tend to think and draw a genome as a horizontal line.  Our reads that have mapped have therefore mapped in the horizontal plane. So for example:
 
+![](mappingExample.jpg)
 
+Here a sequencing read starts and ends at a point, not quite at random, but nearly. The depth is then looked at in a vertical plane for a given base in the reference.  
 
-If you back to the SING-Aotearoa folder on the desktop, you made a file called "pileupXXXX.txt" where XXXX is your sample name.  this is a big file, so we are going to make a smaller version, of say the first 5000 positions:
+If you back to the SING-Aotearoa folder on the desktop, you made a file called "pileupXXXX.txt" where XXXX is your sample name.  This is a big file, so we are going to make a smaller version, of say the first 5000 positions before we look at it:
 
 ```
 system(paste("head -n 5000" inPileUp, ">", inPileUpSmall))
 ```
 
-We defined the names of these files at the start of this part. Click on the file "pileupXXXX_small.txt" and then right click to open with a text editor called TextWrangler.  If you scroll up and down the file, you should see something like the below:
+We defined the names of these files at the start of this part of the practical. Click on the file "pileupXXXX_small.txt" and then right click to open with a text editor called TextWrangler.  If you scroll up and down the file, you should see something like the below:
 
 <p align="center"/><img src="mPileUp.png" alt="thing" width="600"/>
 
-We have a 6 column output here:
+wWat we have done here is in effect rotated our sequencing data through 90 degrees.  In this file however, we have now made each position a line in the file and the information about that position all on one line.  We thus have a 6 column output:
 
 1. Our reference genome - NC_014570.1	
 2. Each base pair is a line - for example 356	
@@ -410,7 +446,7 @@ We have a 6 column output here:
 5. The sequence observed from our sample	- in this case CCCCCCCCCCCCCCCCCCCCCCC	
 6. The quality of the mapped bases - in this case FFFFFFFFFFFFFFFFFFFFFFF
 
-On scrolling any sequences in the 5th column indicate varation against the reference, and there is a fair amount. **Please remeber that we have mapped our sample reads to a related species, so the variation of not comparing like to like is evident.**  There are other kinds of variation visible, but we migt have to leave those for now in the interests of time.
+On scrolling any sequences in the 5th column indicate varation against the reference, and there is a fair amount. **Please remember that we have mapped our sample reads to a related species not to manuka itself, so the variation of not comparing like to like is evident.**  There are other kinds of variation visible, but we might have to leave those for now in the interests of time.
 
 
 ### What did we learn from this mapping example?
@@ -421,7 +457,7 @@ Ok, so we will stop at this point and discuss our results from the whole group. 
 * Do we have good evidence for that?
 * Was this a useful exercise?
 
-Now, we will do some thing completely different.
+Now, we will finish off the practial with some thing completely different.
 
 ---
 
@@ -438,19 +474,25 @@ These overlapping fragments can then be joined together to create a contiguous s
 
 ## Attempt with these reads 
 
-We are going to use a now slightly old piece of software called [Velvet](https://www.ebi.ac.uk/~zerbino/velvet/), but it is still a very useful piee of software.
+We are going to use a now slightly old piece of software called [Velvet](https://www.ebi.ac.uk/~zerbino/velvet/), but it is still a very useful piece of software.  Once again we will go back to RStudio to run some more code:
 
+```
+XXXXXXX
 
+Velvet code in here.....
 
+XXXXXXX
+```
 
+## Analysis of the output
 
-
+There is a great website called [QUAST](http://quast.bioinf.spbau.ru/) where we can upload contigs from assemblies to have a look at them, rather than having to download software.  We shall use this website now.  
 
 ## What did we learn?
 
 
 
-## Analysis of the output
+
 
 
 ---
