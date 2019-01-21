@@ -242,7 +242,7 @@ as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/reference/EuGrandisChl"
 read1 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/XXXX_subsetR1.fq")
 read2 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/XXXX_subsetR2.fq")
 Sam <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX.sam");
-Bam	<- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX.bam");
+Bam <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX.bam");
 BamSort	<- 
 as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted");
 BamSort1 <- 
@@ -250,12 +250,13 @@ as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sor
 BamSort1In <- 
 as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted.bam.bai");
 inPileUp <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/pileupXXXX.txt");
-inPileUpSmall <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/pileupXXXX_small.txt");
+inPileUpSmall <- 
+as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/pileupXXXX_small.txt");
 
 ## run a bowtie build on the reference ##
 
-system(paste("/Users/bioinformatics/Desktop/SING-Aotearoa2019/bowtie2/bowtie2-build ", refSeq, refIn))
-system(paste("/Users/bioinformatics/Desktop/SING-Aotearoa2019/samtools/samtools faidx", refSeq))
+system(paste("/Users/bioinformatics/Applications/bowtie2/bowtie2-build ", refSeq, refIn))
+system(paste("/Users/bioinformatics/Applications/samtools/samtools faidx", refSeq))
 
 
 ## let's do the mapping ##
@@ -269,7 +270,7 @@ system(paste("/Users/bioinformatics/Applications/samtools/samtools mpileup -B -d
 refSeq, BamSort1, ">", inPileUp))
 ```
 
-There's lots here, which is why you have this is a file.  
+There's lots here, which is why you have this as a file, it will take too long to copy and paste.  
 
 But wait, it's not that easy.  We have left out the most important bit, and that is that you have to edit the code to work on your samples.  As written the code will not work!  In lines 15 to 23, there are 9 lines of code to edit:
 
@@ -323,7 +324,8 @@ z <- GRanges("NC_014570.1",IRanges(1,160137))
 
 xcov[z] 
 xnum <- as.numeric(xcov$NC_014570.1[ranges(z)])
-plot(xnum, col = 'red', lwd=0.1, main = "coverage of chloroplast", xlab = "position (bp)", ylab = "sequencing depth")
+plot(xnum, col = 'red', lwd=0.1, main = "coverage of chloroplast", xlab = "position (bp)", 
+ylab = "sequencing depth")
 ```
 
 This result might take a few seconds to generate, and has all the sequencing depth information for the mapping.  There is not really ever uniform across the reference for a variety of reasons.  This is to much data to look at, so just pick a random distance of say 10000 bp in the reference (between 1 and 160,137), and see what the sequencing depth is.  Tty again, with a random start and end point in the below.  You have to enter values, and remember to keep the comma there too:
@@ -335,7 +337,8 @@ z <- GRanges("NC_014570.1",IRanges(--start--,--end--))
 
 xcov[z] 
 xnum <- as.numeric(xcov$NC_014570.1[ranges(z)])
-plot(xnum, col = 'blue', lwd=0.1, main = "coverage of a random section of the chloroplast", xlab = "position (bp)", ylab = "sequencing depth")
+plot(xnum, col = 'blue', lwd=0.1, main = "coverage of a random section of the chloroplast", 
+xlab = "position (bp)", ylab = "sequencing depth")
 ```
 
 Your random section might show all kinds of things is detail, depending on your sample and the region. If you had a gene of interest, you might want to look at that.  Let's do that right now, and in fact this is a gene where some of the SNPs we are going to look at shorly can be found.  This is the *atpA* gene:
@@ -347,7 +350,8 @@ z <- GRanges("NC_014570.1",IRanges(11193,12716))
 
 xcov[z] 
 xnum <- as.numeric(xcov$NC_014570.1[ranges(z)])
-plot(xnum, col = 'steelblue', lwd=1, main = "coverage of the atpA gene on the chloroplast", xlab = "position (bp)", ylab = "sequencing depth")
+plot(xnum, col = 'steelblue', lwd=1, main = "coverage of the atpA gene on the chloroplast", 
+xlab = "position (bp)", ylab = "sequencing depth")
 ```
 
 from these plots, you can see that we have ~300 fold sequencing depth, this means that on average any position in our chloroplast have many reads that map to it.
@@ -427,16 +431,14 @@ Now, we will do some thing completely different.
 
 The assembly of a genome is the process whereby the fragmented small DNA pieces that you have created in the lab that have subsequently been sequenced are reassembled by looking for regions of overlap. These reads must be reassembled in the correct order to visualise the genome correctly, this is carried out simply by taking both ends of each DNA fragment and comparing its code to every other DNA fragment, if the code matches they are said to overlap and they therefore lie side by side in the genome. This is carried out until all of the reads are compared and all of the overlapping fragments obtained. 
 
-These overlapping fragments can then be joined together to create a contiguous sequence or “contig”. As sequencing technologies are not yet perfect, some data will be missing and therefore we do not end up with just one long complete genome contig…. We instead end up with multiple contigs. Additional technology is then used to take these multiple contigs, again find overlaps between contigs to make longer sequences called scaffolds.  Diagrammatically, this looks like:
+These overlapping fragments can then be joined together to create a contiguous sequence or “contig”. As sequencing technologies are not yet perfect, some data will be missing and therefore we do not end up with just one long complete genome contig…. We instead end up with multiple contigs. Additional technology is then used to take these multiple contigs, again find overlaps between contigs to make longer sequences called scaffolds.  Diagrammatically, [this looks like](https://pb-falcon.readthedocs.io/en/latest/about.html):
 
 ![](contigscaffoldingimage.png)
-
-[Link](https://pb-falcon.readthedocs.io/en/latest/about.html)
 
 
 ## Attempt with these reads 
 
-we are going to use a now slightly old piece of software called [Velvet](https://www.ebi.ac.uk/~zerbino/velvet/), but it is still a very useful piee of software.
+We are going to use a now slightly old piece of software called [Velvet](https://www.ebi.ac.uk/~zerbino/velvet/), but it is still a very useful piee of software.
 
 
 
