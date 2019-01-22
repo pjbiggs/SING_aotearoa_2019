@@ -1,3 +1,9 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
 <!---pjbiggs.github.io--->
 
 ![](NewHeader.jpg)
@@ -219,11 +225,10 @@ The file has two sections: a header and an alignment section.  20 pages in the s
 
 The following is an example from one of the files you will shortly generate:
 
-> @HD	VN:1.0	SO:unsorted
->
-> @SQ	SN:NC_014570.1	LN:160137
->
-> @PG	ID:bowtie2	PN:bowtie2	VN:2.2.6	CL:"/usr/bin/bowtie2-align-s --wrapper basic-0 --threads 4 --end-to-end -x /home/pbiggs/extraDrive2/data/ManukaSING/reference/EuGrandisChl -S /home/pbiggs/extraDrive2/data/ManukaSING/results/resultsP026.sam -1 /home/pbiggs/extraDrive2/data/ManukaSING/workingReads/P026_subsetR1.fq -2 /home/pbiggs/extraDrive2/data/ManukaSING/workingReads/P026_subsetR2.fq"
+  > @HD	VN:1.0	SO:unsorted  
+  > @SQ	SN:NC_014570.1	LN:160137  
+  > @PG	ID:bowtie2	PN:bowtie2	VN:2.2.6	CL:"/usr/bin/bowtie2-align-s --wrapper basic-0 --threads 4 --end-to-end -x /home/pbiggs/extraDrive2/data/ManukaSING/reference/EuGrandisChl -S /home/pbiggs/extraDrive2/data/ManukaSING/results/resultsP026.sam -1 /home/pbiggs/extraDrive2/data/ManukaSING/workingReads/P026_subsetR1.fq -2 /home/pbiggs/extraDrive2/data/ManukaSING/workingReads/P026_subsetR2.fq"  
+
 
 Amongst other things, Ii contains information about the reference genome (name and length), as well as how it was generated, i.e. the code that was run.
 
@@ -319,17 +324,12 @@ But wait, it's not that easy.  We have left out the most important bit, and that
 
 Ok, looking at the code, what does it say?  You can ignore the next bit if you want:
 
-> Define all our variables
->
-> Make the correct file from the reference for bowtie2 to use
->
-> Make an index of that file (useful for later)
->
-> Map your reads to the reference to make a SAM file
->
-> Convert this to a BAM file, sort it and index it
->
-> Run a separate command to generate a further text output file 
+  > Define all our variables  
+  > Make the correct file from the reference for bowtie2 to use  
+  > Make an index of that file (useful for later)  
+  > Map your reads to the reference to make a SAM file  
+  > Convert this to a BAM file, sort it and index it  
+  > Run a separate command to generate a further text output file  
 
 Please do not worry too much about the detail, if you can edit the code and get a resulting mapping file that is great, as we can then go on to the next part.  We can discuss further if required.
 
@@ -507,19 +507,84 @@ These overlapping fragments can then be joined together to create a contiguous s
 
 ## Attempt with these reads 
 
-We are going to use a now slightly old piece of software called [Velvet](https://www.ebi.ac.uk/~zerbino/velvet/), but it is still very useful.  Once again we will go back to RStudio to run some more code from there:
+We are going to use a now slightly old piece of software called [Velvet](https://www.ebi.ac.uk/~zerbino/velvet/), but it is still very useful.  Our source data is the same location, but we will place our files in a different folder, as show in the figure below:
+
+![](folderContents2.png)
+
+Once again we will go back to RStudio to run some more code from there by copying and pasting as before:
 
 ```
-XXXXXXX
+### SING-Aotearoa 2019 Bioinformatics practical ###
 
-Velvet code in here.....
+## assembling reads ##
 
-XXXXXXX
+# our programs
+
+velveth <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/velvet_binaries/velveth")
+velvetg <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/velvet_binaries/velvetg")
+shuffleSeq <- 
+  as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/velvet_binaries/shuffleSequences_fastq.pl")
+
+## variables for doing the work ##
+#
+# in the next 5 lines, you have to change the 'TLs' to your allocated sample
+# if you do not do this, this will not work
+#
+#####
+
+
+# our sequence parameters
+
+read1 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/TLs_subsetR1.fq")
+read2 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/TLs_subsetR2.fq")
+shuffle <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/shuffle_TLs.fq")
+resultsDir <- 
+  as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/TLs_subset75/")
+contigs <- 
+  as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/TLs_subset75/contigs.fa")
+contigNewName <- 
+  as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/myContigs75.fa")
+
+# prepare the sequences by shuffling them in the manner required 
+
+system(paste(shuffleSeq, read1, read2, shuffle))
+
+
+# run the command 'velveth' to get our data in the right format 
+
+system(paste(velveth, resultsDir, "75 -fastq -shortPaired", shuffle))
+
+# run the command 'velvetg' to generate the contigs
+
+system(paste(velvetg, resultsDir, "-exp_cov auto -cov_cutoff auto -ins_length 500 -min_contig_lgth 200"))
+
+# rename the contigs for the next part
+
+system(paste("cp", contigs, contigNewName))
+
+##############
+#
+# optional: if there is time, rerun the above command with the value 123 
+#   instead of the value 75 listed above
+#
+##############
+
 ```
+
+As before, you have to replace the "XXXX" with your sample to get the code to work.
+1. Simply replace the value "XXXX" with the value in the 'sample' in the table above.
+2. Save the resulting R file with a different name.
+3. As described above, run the code line by line. Allow time for things to happen (some are quick, some not so).
+
+Please remember that due to time and moving sequence data around the place, we have taken a small subset of reads to work with, and therefore our assemblies could be better with a fuller dataset.
+
+In order to speed the process up, we have run assemblies with some other parameters for a comparison.  These files can be found in the folder called.  We will look at the set of contigs you have just made in comparison with some others.
 
 ## Analysis of the output
 
-There is a great website called [QUAST](http://quast.bioinf.spbau.ru/) where we can upload contigs from assemblies to have a look at them, rather than having to download software.  We shall use this website now.  
+There is a great website called [QUAST](http://quast.bioinf.spbau.ru/) where we can upload contigs from assemblies to have a look at them, rather than having to download software.  We shall use this website now.
+
+In the results folder, there is a set of assemblies from various running parameters.You an upload a number of these files to have a look at them. XXXXXXXXXXXXXXX
 
 ```
 XXXXXXX
