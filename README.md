@@ -513,7 +513,6 @@ Once again we will go back to RStudio to run some more code from there by copyin
 ## assembling reads ##
 
 # our programs
-
 velveth <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/velvet_binaries/velveth")
 velvetg <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/velvet_binaries/velvetg")
 shuffleSeq <- 
@@ -528,7 +527,6 @@ shuffleSeq <-
 
 
 # our sequence parameters
-
 read1 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/TLs_subsetR1.fq")
 read2 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/TLs_subsetR2.fq")
 shuffle <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/shuffle_TLs.fq")
@@ -540,20 +538,15 @@ contigNewName <-
   as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/myContigs75.fa")
 
 # prepare the sequences by shuffling them in the manner required 
-
 system(paste(shuffleSeq, read1, read2, shuffle))
 
-
 # run the command 'velveth' to get our data in the right format 
-
 system(paste(velveth, resultsDir, "75 -fastq -shortPaired", shuffle))
 
 # run the command 'velvetg' to generate the contigs
-
 system(paste(velvetg, resultsDir, "-exp_cov auto -cov_cutoff auto -ins_length 500 -min_contig_lgth 200"))
 
 # rename the contigs for the next part
-
 system(paste("cp", contigs, contigNewName))
 
 ##############
