@@ -505,7 +505,9 @@ We are going to use a now slightly old piece of software called [Velvet](https:/
 
 ![](folderContents2.png)
 
-Once again we will go back to RStudio to run some more code from there by copying and pasting as before:
+Once again we will go back to RStudio to run some more code from there by copying and pasting as before.  Open the file by performing the following in RStudio:
+
+`File > Open file > /Desktop/SING-Aotearoa2019/velvetAssembler.r:`
 
 ```
 ### SING-Aotearoa 2019 Bioinformatics practical ###
