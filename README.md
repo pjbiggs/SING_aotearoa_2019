@@ -104,13 +104,13 @@ On the desktop you will see a folder called "bioinformatics":
 
 ![](bioinformaticsFolder.png)
 
-We will work with a folder from within the "bioinformatics" folder.  You should see the "bioinformatics" folder on your desktop.  Double click on it and go to the "SING-Aotearoa2019" folder (there are lots of folders in the "bioinformatics folder" from other courses that are run using these computers).  Click on the folder once and then, copy the folder to your Desktop before you do anything else (this could take a fe wminutes).  We will work with the contents of this folder.
+We will work with a folder from within the "bioinformatics" folder.  You should see the "bioinformatics" folder on your desktop.  Double click on it and go to the "SING-Aotearoa2019" folder (there are lots of folders in the "bioinformatics folder" from other courses that are run using these computers).  Click on the folder once and then, copy the folder to your Desktop before you do anything else (this could take a few minutes).  We will work with the contents of this folder.
 
 So, what do we have in this folder to work with?  A screenshot of the folder is below:
 
 ![](folderContents.png)
 
-We have a file called "bowtie2mapper.r", and then 3 folders of interest right now called:
+We have a file called "bowtie2mapper.r" that w can run inside RStudio, and then 3 folders of interest right now called:
 
 * sourceReads - where the reads we are going to work with live
 * results - where we will place our results
@@ -119,7 +119,7 @@ We have a file called "bowtie2mapper.r", and then 3 folders of interest right no
 
 ### Our environment
 
-So let's look at RStudio in a little more detail.  Again, this is a brief introduction to give you a flavour.  On opening RStudio, you should see four windows, of which we are mostly worried about the two on the left hand side, the two on the right hand side not so much.  
+So let's look at RStudio in a little more detail.  Again, this is a brief introduction to give you a flavour.  On opening RStudio, you should see four windows, of which we are mostly concerned with the two on the left hand side, the two on the right hand side not so much.  
 
 ![](Rstudio.PNG)
 
@@ -127,21 +127,21 @@ Think of the top window -- the source -- as where we ask the software to do thin
 
 We are dealing with lots of new concepts simultaneously here, and we are trying to make this understandable, rather than  "ahh, it's all new and too complicated".  Therefore, we are keeping to only a single piece of software today rather than many, but trust me, we can do a lot here, and there is alot going on behind the scenes.
 
-For the sake of time, we are also copying and pasting from the text in the style below into the source window (in a more detailed course there would be typing of these commands).  It's in a different font:
+For the sake of time, we are also copying and pasting from the text in the style below into the source window (in a more detailed undergraduate course there would be typing of these commands).  Commands and/or things to do are in a different font:
 
-`library(ggplot2)`
+   `library(ggplot2)`
 
 or it might be in a box that looks like this:
 
-```
-library(ggplot2)
-```
+   ```
+   library(ggplot2)
+   ```
 
 Either way, this is the code we want to use.  Your top left -- source -- window should be empty.  If we copy this text into the source window, highlight the line it is on and hit the run button, we see a response in the console below.  Let's give it a try with this line of code....
 
 ![](Rinstructions.png)
 
-Ok, you should see something like the following in the console (number 6), if not please raise your hand to get some help.  What we have done here is not so important (we have loaded a pre-packed piece of R software called a library that does a great many things for us) as the fact you have run a command in RStudio and it did something.  Well done!  We are going to be doing more of this soon...
+Ok, you should see something like the following in the console (number 6), if not please raise your hand to get some help.  What we have done here is not so important (actually, we have loaded a pre-packed piece of R software called a library that does a great many things for us) as the fact you have run a command in RStudio and it did something.  Well done!  We are going to be doing more of this soon...
 
 ---
 
@@ -175,7 +175,7 @@ Sequences can go over multiple lines, or one very long line, and there can be th
 
 ## Fastq format
 
-THe new sequencing machines from the last decade or so provide us more information than the older -- Sanger -- sequncing ones did.  We now a have new sequence format called fastq that gives us much more information, that extra information being the quality of the sequences generated.  A brief overview of the format can be found at the [FASTQ_format](https://en.wikipedia.org/wiki/FASTQ_format) wiki page. Please have a look at this file to familiarise yourself with the fact that each sequence covers 4 lines of text, and has much more information in it than a standard fasta file:
+THe new sequencing machines from the last decade or so provide us more information than the older -- Sanger -- sequencing ones did.  We now a have new sequence format called fastq that gives us much more information, that extra information being the quality of the sequences generated for every cluster in every cycle.  A brief overview of the format can be found at the [FASTQ_format](https://en.wikipedia.org/wiki/FASTQ_format) wiki page. Please have a look at this file to familiarise yourself with the fact that each sequence covers 4 lines of text, and has more information in it than a standard fasta file:
 
 ```
 read header (usually starts with '@')
@@ -193,7 +193,7 @@ ACTAGCTTGTCACCAATGGTGCACTCTCATTGGCAAGTGGAACTACATTAAACGGGCAAACCATCGTTAC
 hhhheghh_hhhghhhfegddafefghhghhhhghhhdhhdadcdggahedf[cdfgfeffcfcddaadd
 ```
 
-The header line -- starting with '@' -- is complicated in terms of the information it provides, but useful nonetheless.  As you may now see, these files can be truly huge in size, and a typical output may have millions of sequences in a single file.  Luckily the software knows how to interpret these files correctly!
+The header line -- starting with '@' -- is complicated in terms of the information it provides, but useful nonetheless to certain software.  As you may now see, these files can be truly huge in size, and a typical output may have millions (or now with the newest technology billions) of sequences in a single file.  Luckily the software knows how to interpret these files correctly!
 
 ### Sequence quality
 
@@ -209,9 +209,9 @@ However this idea that we can have a way to look at the quality of a single base
 
 ## SAM/BAM files
 
-We have met two filetypes so far -- fasta and fastq -- and now it is time for the third and fourth type.  It is really only one type, called a SAM file, as the other type called a BAM file is a compressed, indexed binary version of a SAM file.  Again, we are looking at very large files here, so hard disk space is an issue, and compressing files is a good thing.
+We have met two filetypes so far -- fasta and fastq -- and now it is time for the third and fourth type.  It is really only one type, called a SAM file, as the other type called a BAM file is a compressed, indexed binary version of a SAM file.  Again, we are looking at very large files here, so hard disk space is an issue, and compressing files is a good thing.  once again, software can deal with this compressed version.
 
-What does a SAM file look like?  SAM stands for **S**sequence **A**lignment **M**ap and is a text format for storing sequence data in a series of tab delimited  columns.  some basic information can be found at this [SAM information](https://genome.sph.umich.edu/wiki/SAM) page.  As this is a very important file type it has [official specifications](http://samtools.github.io/hts-specs/SAMv1.pdf) that is 20 pages long and quite detailed.
+What does a SAM file look like?  SAM stands for **S**sequence **A**lignment **M**ap and is a text format for storing sequence data in a series of tab delimited columns.  Some basic information can be found at this [SAM information](https://genome.sph.umich.edu/wiki/SAM) page.  As this is a very important file type it has [official specifications](http://samtools.github.io/hts-specs/SAMv1.pdf) that is 20 pages long and quite detailed!
 
 The file has two sections: a header and an alignment section.  20 pages in the specification means lots of information, but again for the purposes of today, this file provides a way to define how sequence reads map to a reference genome.
 
@@ -223,8 +223,7 @@ The following is an example from one of the files you will shortly generate:
   > @SQ	SN:NC_014570.1	LN:160137  
   > @PG	ID:bowtie2	PN:bowtie2	VN:2.2.6	CL:"/usr/bin/bowtie2-align-s --wrapper basic-0 --threads 4 --end-to-end -x /home/pbiggs/extraDrive2/data/ManukaSING/reference/EuGrandisChl -S /home/pbiggs/extraDrive2/data/ManukaSING/results/resultsP026.sam -1 /home/pbiggs/extraDrive2/data/ManukaSING/workingReads/P026_subsetR1.fq -2 /home/pbiggs/extraDrive2/data/ManukaSING/workingReads/P026_subsetR2.fq"  
 
-
-Amongst other things, Ii contains information about the reference genome (name and length), as well as how it was generated, i.e. the code that was run.
+Amongst other things, it contains information about the reference genome (name and length), as well as how it was generated, i.e. the code that was run.
 
 ### The alignment section
 
