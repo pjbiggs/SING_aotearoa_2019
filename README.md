@@ -254,59 +254,59 @@ Let's start using RStudio to do some investigation on these sequencing reads.  I
 
 In your source window -- in lots of colour -- the code should look like the below.  **lines that start with a `#` are comments and the sofware does nothing with them, they are there for primarily for your information.**  
 
-```
-### SING-Aotearoa 2019 Bioinformatics practical ###
+   ```
+   ### SING-Aotearoa 2019 Bioinformatics practical ###
 
-## mapping reads to a reference ##
+   ## mapping reads to a reference ##
 
-# our reference genome  
+   # our reference genome  
 
-refSeq <- 
-as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/reference/Eucalyptus_grandis_chloroplastic_genome.txt")
-refIn <- 
-as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/reference/EuGrandisChl")
+   refSeq <- 
+   as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/reference/Eucalyptus_grandis_chloroplastic_genome.txt")
+   refIn <- 
+   as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/reference/EuGrandisChl")
 
-## variables for doing the work ##
-#
-# in the next 9 lines, you have to change the 'XXXX' to your allocated sample
-# if you do not do this, this will not work
-#
-#####
+   ## variables for doing the work ##
+   #
+   # in the next 9 lines, you have to change the 'XXXX' to your allocated sample
+   # if you do not do this, this will not work
+   #
+   #####
 
-read1 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/XXXX_subsetR1.fq")
-read2 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/XXXX_subsetR2.fq")
-Sam <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX.sam");
-Bam <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX.bam");
-BamSort	<- 
-as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted");
-BamSort1 <- 
-as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted.bam");
-BamSort1In <- 
-as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted.bam.bai");
-inPileUp <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/pileupXXXX.txt");
-inPileUpSmall <- 
-as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/pileupXXXX_small.txt");
-
-
-## run a bowtie build on the reference ##
-
-system(paste("/Users/bioinformatics/Applications/bowtie2/bowtie2-build ", refSeq, refIn))
-system(paste("/Users/bioinformatics/Applications/samtools/samtools faidx", refSeq))
+   read1 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/XXXX_subsetR1.fq")
+   read2 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/XXXX_subsetR2.fq")
+   Sam <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX.sam");
+   Bam <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX.bam");
+   BamSort	<- 
+   as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted");
+   BamSort1 <- 
+   as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted.bam");
+   BamSort1In <- 
+   as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted.bam.bai");
+   inPileUp <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/pileupXXXX.txt");
+   inPileUpSmall <- 
+   as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/pileupXXXX_small.txt");
 
 
-## let's do the mapping ##
+   ## run a bowtie build on the reference ##
 
-system(paste("/Users/bioinformatics/Applications/bowtie2/bowtie2 --end-to-end -x ", refIn, " -1 ", read1, 
-" -2 ", read2, " -S ", Sam))
-system(paste("/Users/bioinformatics/Applications/samtools/samtools view -bS ", Sam, " > ", Bam))
-system(paste("/Users/bioinformatics/Applications/samtools/samtools sort ", Bam, BamSort))
-system(paste("/Users/bioinformatics/Applications/samtools/samtools index ", BamSort1))
-system(paste("/Users/bioinformatics/Applications/samtools/samtools mpileup -B -d 1000 -f", 
-refSeq, BamSort1, ">", inPileUp))
+   system(paste("/Users/bioinformatics/Applications/bowtie2/bowtie2-build ", refSeq, refIn))
+   system(paste("/Users/bioinformatics/Applications/samtools/samtools faidx", refSeq))
 
 
-## all complete for now
-```
+   ## let's do the mapping ##
+
+   system(paste("/Users/bioinformatics/Applications/bowtie2/bowtie2 --end-to-end -x ", refIn, " -1 ", read1, 
+   " -2 ", read2, " -S ", Sam))
+   system(paste("/Users/bioinformatics/Applications/samtools/samtools view -bS ", Sam, " > ", Bam))
+   system(paste("/Users/bioinformatics/Applications/samtools/samtools sort ", Bam, BamSort))
+   system(paste("/Users/bioinformatics/Applications/samtools/samtools index ", BamSort1))
+   system(paste("/Users/bioinformatics/Applications/samtools/samtools mpileup -B -d 1000 -f", 
+   refSeq, BamSort1, ">", inPileUp))
+
+
+   ## all complete for now
+   ```
 
 There's lots here, which is why you have this as a file, it will take too long to copy and paste.  
 
@@ -334,83 +334,83 @@ Can we look at some overall summaries of the way the mapping has worked?  Please
 
 We have to load some of R packages to allow the software to perform certain functions for us, on our sequence object -- the Bam file we just created called `BamSort1`.  Let's just check it out to see how well our reads mapped to it:
 
-```
-# we shall load a couple of libraries
+   ```
+   # we shall load a couple of libraries
 
-library("Rsamtools")
-library("GenomicAlignments")
+   library("Rsamtools")
+   library("GenomicAlignments")
 
-# we shall change our variable names
-#
-# remember again to replace the "XXXX" with your sample name
+   # we shall change our variable names
+   #
+   # remember again to replace the "XXXX" with your sample name
 
-Bam <- ("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX.bam");
-BamSort	<- ("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted");
-BamSort1 <- ("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted.bam");
-BamSort1In <- ("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted.bam.bai");
+   Bam <- ("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX.bam");
+   BamSort	<- ("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted");
+   BamSort1 <- ("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted.bam");
+   BamSort1In <- ("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/resultsXXXX_Sorted.bam.bai");
 
-# we shall perform a quick summary analysis on our mapped Bam file
+   # we shall perform a quick summary analysis on our mapped Bam file
 
-idxstatsBam(BamSort1, index=BamSort1)
-```
+   idxstatsBam(BamSort1, index=BamSort1)
+   ```
 
 Once again, you wil have to change the "XXXX" to your sample name.  We can see now that we have 250,000 reads that have mapped to the reference NC_014570, and there are 0 reads unmapped.  Is that what you see for your sample?
 
 What else can we do?  A great deal, but again we are short on time.  However ome thing we can do is have a look at the way the reads have mapped to the reference, first by text, and then graphically.  
 
-```
-# read in the sequence alignments
+   ```
+   # read in the sequence alignments
 
-x <- readGAlignments(BamSort1)
+   x <- readGAlignments(BamSort1)
 
-# calculate the coverage values and print the output to screen
+   # calculate the coverage values and print the output to screen
 
-xcov <- coverage(x)
-xcov
-```
+   xcov <- coverage(x)
+   xcov
+   ```
 
 We miss out lots of information here when it is printed to the console like this.  Can we look at it graphically?  Yes we can:
 
-```
-# capture the range of our reference
+   ```
+   # capture the range of our reference
 
-z <- GRanges("NC_014570.1",IRanges(1,160137))
+   z <- GRanges("NC_014570.1",IRanges(1,160137))
 
-# subset the coverage of the region of interest, convert it and print out an image
+   # subset the coverage of the region of interest, convert it and print out an image
 
-xcov[z] 
-xnum <- as.numeric(xcov$NC_014570.1[ranges(z)])
-plot(xnum, col = 'red', lwd=0.1, main = "coverage of chloroplast", xlab = "position (bp)", 
-ylab = "sequencing depth")
-```
+   xcov[z] 
+   xnum <- as.numeric(xcov$NC_014570.1[ranges(z)])
+   plot(xnum, col = 'red', lwd=0.1, main = "coverage of chloroplast", xlab = "position (bp)", 
+   ylab = "sequencing depth")
+   ```
 
 This result might take a few seconds to generate the figure, and has all the sequencing depth information for the mapping.  There is not really ever uniform across the reference for a variety of reasons.  This is to much data to look at, so let's just pick a random distance of say 10,000 bp in the reference (between 1 and 160,137), and see what the sequencing depth is.  Tty again, with a random start and end point in the below.  You have to enter values, and remember to keep the comma there too:
 
-```
-z <- GRanges("NC_014570.1",IRanges(--start--,--end--))
+   ```
+   z <- GRanges("NC_014570.1",IRanges(--start--,--end--))
 
-# subset the coverage of the region of interest, convert it and print out an image
+   # subset the coverage of the region of interest, convert it and print out an image
 
-xcov[z] 
-xnum <- as.numeric(xcov$NC_014570.1[ranges(z)])
-plot(xnum, col = 'blue', lwd=0.1, main = "coverage of a random section of the chloroplast", 
-xlab = "position (bp)", ylab = "sequencing depth")
-```
+   xcov[z] 
+   xnum <- as.numeric(xcov$NC_014570.1[ranges(z)])
+   plot(xnum, col = 'blue', lwd=0.1, main = "coverage of a random section of the chloroplast", 
+   xlab = "position (bp)", ylab = "sequencing depth")
+   ```
 
 Your random section might show all kinds of things in detail, depending on your sample and the region. Give it a go a couple of times if you like, but remeber to rerun the complete code block above, from setting new values for "z".
 
 If you had a gene of interest, you might want to look at that too.  Let's do that right now, and in fact this is a gene where some of the SNPs we are going to look at shortly can be found.  This is the *atpA* gene:
 
-```
-z <- GRanges("NC_014570.1",IRanges(11193,12716))
+   ```
+   z <- GRanges("NC_014570.1",IRanges(11193,12716))
 
-# subset the coverage of the region of interest, convert it and print out an image
+   # subset the coverage of the region of interest, convert it and print out an image
 
-xcov[z] 
-xnum <- as.numeric(xcov$NC_014570.1[ranges(z)])
-plot(xnum, col = 'steelblue', lwd=1, main = "coverage of the atpA gene on the chloroplast", 
-xlab = "position (bp)", ylab = "sequencing depth")
-```
+   xcov[z] 
+   xnum <- as.numeric(xcov$NC_014570.1[ranges(z)])
+   plot(xnum, col = 'steelblue', lwd=1, main = "coverage of the atpA gene on the chloroplast", 
+   xlab = "position (bp)", ylab = "sequencing depth")
+   ```
 
 From these three plots, you can see that we have ~300 fold sequencing depth, this means that on average any position in our chloroplast have many (say around 300) individuals reads that map to the region where that position is.  As you can see though, it is not that simple.
 
@@ -436,15 +436,15 @@ If your sample is from the geographic location you should see the DNA base in th
 
 How do we do this by code?  Let's use and run the following:
 
-```
-# these first two lines set the number of rows of data at the start and end of the output
-# these values can easily be changed if you need to
-# the last line does the work, and analyses the data over the region we have asked for
+   ```
+   # these first two lines set the number of rows of data at the start and end of the output
+   # these values can easily be changed if you need to
+   # the last line does the work, and analyses the data over the region we have asked for
 
-options(showHeadLines=150)
-options(showTailLines=50)
-stackStringsFromBam(BamSort1, param=GRanges("NC_014570.1",IRanges(--start--,--end--)))
-```
+   options(showHeadLines=150)
+   options(showTailLines=50)
+   stackStringsFromBam(BamSort1, param=GRanges("NC_014570.1",IRanges(--start--,--end--)))
+   ```
 
 Please replace the "--start--" and "--end--" with the values in the table below, and then run your code.  **Keeping the comma in between them is important, so please make sure it is there, otherwise it will not work.**  This will print out the alignment for 100 bp in your region of interest to the console.  Try to find the sequence from the table, and then the 4th base after it.  Please make a note of it.
 
@@ -456,9 +456,9 @@ Here a sequencing read starts and ends at a point, not quite at random, but near
 
 If you go back to the SING-Aotearoa folder on your desktop, as part of the code run you made a file called "pileupXXXX.txt" where XXXX is your sample name.  This is a big file, so we are going to make a smaller version, of say the first 5000 positions before we look inside it:
 
-```
-system(paste("head -n 5000" inPileUp, ">", inPileUpSmall))
-```
+   ```
+   system(paste("head -n 5000" inPileUp, ">", inPileUpSmall))
+   ```
 
 We defined the names of these files at the start of this part of the practical. Click on the file "pileupXXXX_small.txt" and then right click to open with a text editor called TextWrangler.  If you scroll up and down the file, you should see something like the below:
 
@@ -507,58 +507,58 @@ We are going to use a now slightly old piece of software called [Velvet](https:/
 
 Once again we will go back to RStudio to run some more code from there by copying and pasting as before.  Open the file by performing the following in RStudio:
 
-`File > Open file > /Desktop/SING-Aotearoa2019/velvetAssembler.r:`
+   `File > Open file > /Desktop/SING-Aotearoa2019/velvetAssembler.r:`
 
-```
-### SING-Aotearoa 2019 Bioinformatics practical ###
+   ```
+   ### SING-Aotearoa 2019 Bioinformatics practical ###
 
-## assembling reads ##
+   ## assembling reads ##
 
-# our programs
-velveth <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/velvet_binaries/velveth")
-velvetg <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/velvet_binaries/velvetg")
-shuffleSeq <- 
-  as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/velvet_binaries/shuffleSequences_fastq.pl")
+   # our programs
+   velveth <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/velvet_binaries/velveth")
+   velvetg <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/velvet_binaries/velvetg")
+   shuffleSeq <- 
+     as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/velvet_binaries/shuffleSequences_fastq.pl")
 
-## variables for doing the work ##
-#
-# in the next 5 lines, you have to change the 'TLs' to your allocated sample
-# if you do not do this, this will not work
-#
-#####
+   ## variables for doing the work ##
+   #
+   # in the next 5 lines, you have to change the 'TLs' to your allocated sample
+   # if you do not do this, this will not work
+   #
+   #####
 
 
-# our sequence parameters
-read1 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/TLs_subsetR1.fq")
-read2 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/TLs_subsetR2.fq")
-shuffle <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/shuffle_TLs.fq")
-resultsDir <- 
-  as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/TLs_subset75/")
-contigs <- 
-  as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/TLs_subset75/contigs.fa")
-contigNewName <- 
-  as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/myContigs75.fa")
+   # our sequence parameters
+   read1 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/TLs_subsetR1.fq")
+   read2 <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/TLs_subsetR2.fq")
+   shuffle <- as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/sourceReads/shuffle_TLs.fq")
+   resultsDir <- 
+     as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/TLs_subset75/")
+   contigs <- 
+     as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/TLs_subset75/contigs.fa")
+   contigNewName <- 
+     as.name("/Users/bioinformatics/Desktop/SING-Aotearoa2019/results/myContigs75.fa")
 
-# prepare the sequences by shuffling them in the manner required 
-system(paste(shuffleSeq, read1, read2, shuffle))
+   # prepare the sequences by shuffling them in the manner required 
+   system(paste(shuffleSeq, read1, read2, shuffle))
 
-# run the command 'velveth' to get our data in the right format 
-system(paste(velveth, resultsDir, "75 -fastq -shortPaired", shuffle))
+   # run the command 'velveth' to get our data in the right format 
+   system(paste(velveth, resultsDir, "75 -fastq -shortPaired", shuffle))
 
-# run the command 'velvetg' to generate the contigs
-system(paste(velvetg, resultsDir, "-exp_cov auto -cov_cutoff auto -ins_length 500 -min_contig_lgth 200"))
+   # run the command 'velvetg' to generate the contigs
+   system(paste(velvetg, resultsDir, "-exp_cov auto -cov_cutoff auto -ins_length 500 -min_contig_lgth 200"))
 
-# rename the contigs for the next part
-system(paste("cp", contigs, contigNewName))
+   # rename the contigs for the next part
+   system(paste("cp", contigs, contigNewName))
 
-##############
-#
-# optional: if there is time, rerun the above command with the value 123 
-#   instead of the value 75 listed above
-#
-##############
+   ##############
+   #
+   # optional: if there is time, rerun the above command with the value 123 
+   #   instead of the value 75 listed above
+   #
+   ##############
 
-```
+   ```
 
 As before, you have to replace the "XXXX" with your sample to get the code to work.
 1. Simply replace the value "XXXX" with the value in the 'sample' in the table above.
@@ -573,22 +573,17 @@ In order to speed the process up, we have run assemblies with some other paramet
 
 There is a great website called [QUAST](http://quast.bioinf.spbau.ru/) where we can upload contigs from assemblies to have a look at them, rather than having to download software.  We shall use this website now.
 
-In the results folder, there is a set of assemblies from various running parameters.You an upload a number of these files to have a look at them. XXXXXXXXXXXXXXX
+In the results folder, there is a set of assemblies from various running parameters. You can upload a number of these files to have a look at them. This s explained in the figure below.
 
-```
-XXXXXXX
+![](quastShot.jpg)
 
-upload contigs to QUAST
-
-XXXXXXX
-```
-
+The report should take a couple of minutes to generate. Clicking on the date should send you to a new page where the report is. The page gices us an overview of how the assembly has gone, in terms of parameters that we could use.  We will discuss this more together.
 
 ## What did we learn?
 
+We have taken our short reads, and assembled them into longer pieces of DNA - contigs - that we could analyse further.  If we were to get a better reference from is process, we could ten use that to map our reads back to, and by performing that analysis again, we would have far fewer SNPs visible compared to the apporach we have used today.
 
-
-
+Assembling a genome is not easy, especially for a chloroplast.  Can anyone think why?
 
 
 ---
