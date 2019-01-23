@@ -574,7 +574,7 @@ There is a great website called [QUAST](http://quast.bioinf.spbau.ru/) where we 
 
 In the results folder, there is a set of assemblies from various running parameters. You can upload a number of these files to have a look at them. This s explained in the figure below.
 
-![](quastShot.jpg)
+![](quastProcess.jpg)
 
 The report should take a couple of minutes to generate. Clicking on the date should send you to a new page where the report is. The page gices us an overview of how the assembly has gone, in terms of parameters that we could use.  We will discuss this more together.
 
