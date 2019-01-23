@@ -11,7 +11,7 @@ We are planning on covering the following in our 90 minute session:
 * Some background on next generating sequencing
 * What are we going to do?
     * What is a chloroplast?
-    * How are going to do the practical?
+    * How are we going to do the practical?
         * Our computers
         * Our data source
         * Our environment
@@ -81,7 +81,7 @@ We have our reference genome, and also our short reads that have been previously
 
 ---
 
-## How are going to do the practical?
+## How are we going to do the practical?
 
 We are going to use Apple iMacs and a set of data that we can download from a resource to work with.  If you have not used an iMac before, the "command line", or a piece of software called [RStudio](https://www.rstudio.com/), then we have a few preliminaries to go through.
 
@@ -421,7 +421,7 @@ We have 10 SNPs, of which 3 have been amplified this morning.  We shall have a l
 
 Now we are going to look at 5 regions of the chloroplast genome where we know there are SNPs that help us locate our samples. Please be aware there are many other SNPs beyond these 5 we are interested in that might also be interesting in a fuller analysis.  **Because mapping causes slight variations in the way the bases are mapped by changing the coordinates, we have to look at a region and then the sequence within that.**  
 
-The following table shows 5 regions for us to look at.  Again, using these regions in the code below, as well as the supplied DNA sequence, please make a note of the DNA base that is the 4th one after the sequence supplied in the table below, as that is our DNA base of interest:
+The following table shows 5 regions for us to look at.  Again, using these regions in the code block below, as well as the supplied DNA sequence, please make a note of the DNA base that is the 4th one after the sequence supplied in the table below, as that is our DNA base of interest:
 
 | Marker name | Primer sequence    |  Specificity  | Allele targeted | Reference | start | end   |
 |-------------|--------------------|:-------------:|:---------------:|:---------:|-------|-------|
@@ -445,7 +445,7 @@ How do we do this by code?  Let's use and run the following:
    stackStringsFromBam(BamSort1, param=GRanges("NC_014570.1",IRanges(--start--,--end--)))
    ```
 
-Please replace the "--start--" and "--end--" with the values in the table below, and then run your code.  **Keeping the comma in between them is important, so please make sure it is there, otherwise it will not work.**  This will print out the alignment for 100 bp in your region of interest to the console.  Try to find the sequence from the table, and then the 4th base after it.  Please make a note of it.
+Please replace the "--start--" and "--end--" with the values in the table above, and then run your code.  **Keeping the comma in between them is important, so please make sure it is there, otherwise it will not work.**  This will print out the alignment for 100 bp in your region of interest to the console.  Try to find the sequence from the table, and then the 4th base after it.  Please make a note of it.
 
 People tend to think and draw a genome as a horizontal line.  Our reads that have mapped have therefore mapped in the horizontal plane. So for example:
 
@@ -572,15 +572,15 @@ In order to speed the process up, we have run assemblies with some other paramet
 
 There is a great website called [QUAST](http://quast.bioinf.spbau.ru/) where we can upload contigs from assemblies to have a look at them, rather than having to download software.  We shall use this website now.
 
-In the results folder, there is a set of assemblies from various running parameters. You can upload a number of these files to have a look at them. This s explained in the figure below.
+In the results folder, there is a set of assemblies from various running parameters. You can upload a number of these files to have a look at them. This is explained in the figure below.
 
 ![](quastProcess.png)
 
-The report should take a couple of minutes to generate. Clicking on the date should send you to a new page where the report is. The page gices us an overview of how the assembly has gone, in terms of parameters that we could use.  We will discuss this more together.
+The report should take a couple of minutes to generate. Clicking on the date should send you to a new page where the report is. The page gives us an overview of how the assembly has gone, in terms of parameters that we could use.  We will discuss this more together.
 
 ## What did we learn?
 
-We have taken our short reads, and assembled them into longer pieces of DNA - contigs - that we could analyse further.  If we were to get a better reference from is process, we could ten use that to map our reads back to, and by performing that analysis again, we would have far fewer SNPs visible compared to the apporach we have used today.
+We have taken our short reads, and assembled them into longer pieces of DNA - contigs - that we could analyse further.  If we were to get a better reference from is process, we could then use that to map our reads back to, and by performing that analysis again, we would have far fewer SNPs visible compared to the apporach we have used today.
 
 Assembling a genome is not easy, especially for a chloroplast.  Can anyone think why?
 
